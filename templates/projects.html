@@ -1,0 +1,1190 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =====================================================
+   PROJECTS PAGE
+===================================================== */
+
+.projects-page {
+    min-height: calc(100vh - 70px);
+    width: 100%;
+
+    position: relative;
+    overflow: hidden;
+
+    padding: 70px 20px 90px;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(37, 99, 235, 0.22),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(124, 58, 237, 0.20),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #030712 0%,
+            #07101f 45%,
+            #050816 100%
+        );
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   BACKGROUND GLOW
+===================================================== */
+
+.projects-page::before {
+    content: "";
+
+    position: absolute;
+
+    width: 550px;
+    height: 550px;
+
+    top: -280px;
+    left: -200px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 99, 235, 0.38);
+
+    filter: blur(140px);
+
+    pointer-events: none;
+
+    animation:
+        projectBlueGlow
+        9s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+.projects-page::after {
+    content: "";
+
+    position: absolute;
+
+    width: 550px;
+    height: 550px;
+
+    bottom: -280px;
+    right: -200px;
+
+    border-radius: 50%;
+
+    background: rgba(124, 58, 237, 0.32);
+
+    filter: blur(140px);
+
+    pointer-events: none;
+
+    animation:
+        projectPurpleGlow
+        11s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes projectBlueGlow {
+
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(100px, 80px);
+    }
+
+}
+
+
+@keyframes projectPurpleGlow {
+
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-100px, -70px);
+    }
+
+}
+
+
+/* =====================================================
+   MAIN WRAPPER
+===================================================== */
+
+.projects-wrapper {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+}
+
+
+/* =====================================================
+   TOP BADGE
+===================================================== */
+
+.projects-badge-wrapper {
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+
+.projects-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 15px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(59, 130, 246, 0.10);
+
+    border:
+        1px solid
+        rgba(96, 165, 250, 0.22);
+
+    color: #93c5fd;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+}
+
+
+.projects-badge-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 5px #60a5fa,
+        0 0 12px rgba(96, 165, 250, 0.8);
+
+    animation: projectBadgePulse 2s infinite;
+}
+
+
+@keyframes projectBadgePulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.projects-header {
+    max-width: 800px;
+
+    margin: 0 auto 50px;
+
+    text-align: center;
+}
+
+
+.projects-title {
+    margin: 0 0 15px;
+
+    color: #ffffff;
+
+    font-size: clamp(40px, 6vw, 58px);
+
+    font-weight: 700;
+
+    letter-spacing: -2px;
+
+    line-height: 1.05;
+}
+
+
+.projects-title span {
+    background:
+        linear-gradient(
+            90deg,
+            #60a5fa,
+            #818cf8,
+            #c084fc
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+}
+
+
+.projects-subtitle {
+    margin: 0 0 14px;
+
+    color: #93c5fd;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+}
+
+
+.projects-intro {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: rgba(255, 255, 255, 0.80);
+
+    font-size: 15px;
+
+    font-weight: 400;
+
+    line-height: 1.8;
+}
+
+
+/* =====================================================
+   PROJECTS LIST
+===================================================== */
+
+.projects-list {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 22px;
+
+    width: 100%;
+}
+
+
+/* =====================================================
+   PROJECT GLASS CARD
+===================================================== */
+
+.project-card {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 90px 1fr;
+
+    gap: 25px;
+
+    align-items: center;
+
+    padding: 35px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.085),
+            rgba(255, 255, 255, 0.03)
+        );
+
+    backdrop-filter: blur(25px);
+
+    -webkit-backdrop-filter: blur(25px);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+}
+
+
+/* Glass reflection */
+
+.project-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    top: -200px;
+    left: -80px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.13);
+
+    filter: blur(80px);
+
+    pointer-events: none;
+}
+
+
+/* Top glowing border */
+
+.project-card::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 15%;
+
+    width: 70%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(147, 197, 253, 0.55),
+            transparent
+        );
+
+    opacity: 0.7;
+
+    transition: opacity 0.3s ease;
+}
+
+
+/* =====================================================
+   PROJECT CARD HOVER
+===================================================== */
+
+.project-card:hover {
+    transform:
+        translateY(-7px)
+        scale(1.005);
+
+    border-color:
+        rgba(96, 165, 250, 0.28);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.10),
+            rgba(124, 58, 237, 0.055)
+        );
+
+    box-shadow:
+        0 35px 80px rgba(0, 0, 0, 0.42),
+        0 0 35px rgba(59, 130, 246, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+
+.project-card:hover::after {
+    opacity: 1;
+}
+
+
+/* =====================================================
+   PROJECT ICON
+===================================================== */
+
+.project-icon {
+    position: relative;
+
+    width: 76px;
+    height: 76px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.18),
+            rgba(124, 58, 237, 0.18)
+        );
+
+    border:
+        1px solid
+        rgba(96, 165, 250, 0.20);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.08),
+        0 15px 35px
+        rgba(0, 0, 0, 0.22);
+
+    font-size: 30px;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+
+.project-card:hover .project-icon {
+    transform:
+        translateY(-3px)
+        rotate(-3deg)
+        scale(1.06);
+
+    border-color:
+        rgba(96, 165, 250, 0.38);
+
+    box-shadow:
+        0 0 30px
+        rgba(59, 130, 246, 0.15);
+}
+
+
+/* =====================================================
+   PROJECT CONTENT
+===================================================== */
+
+.project-content {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.project-number {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #818cf8;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+.project-card h2 {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+
+    line-height: 1.3;
+}
+
+
+/* =====================================================
+   BRIGHTER DESCRIPTION
+   Easier to read outdoors
+===================================================== */
+
+.project-desc {
+    max-width: 850px;
+
+    margin: 0 0 20px;
+
+    color:
+        rgba(255, 255, 255, 0.82);
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    line-height: 1.85;
+}
+
+
+/* =====================================================
+   PROJECT TAGS
+===================================================== */
+
+.project-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+
+.project-tags span {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 11px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.055);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.11);
+
+    color:
+        rgba(255, 255, 255, 0.82);
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.project-tags span:hover {
+    transform: translateY(-2px);
+
+    background:
+        rgba(59, 130, 246, 0.12);
+
+    border-color:
+        rgba(96, 165, 250, 0.35);
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   PROJECT FOOTER
+===================================================== */
+
+.projects-footer {
+    margin-top: 40px;
+
+    text-align: center;
+}
+
+
+.projects-footer p {
+    margin: 0 0 18px;
+
+    color:
+        rgba(255, 255, 255, 0.72);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   CTA BUTTON
+===================================================== */
+
+.projects-contact-btn {
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 24px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #7c3aed
+        );
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.15);
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 12px 30px
+        rgba(37, 99, 235, 0.25);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.projects-contact-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.25),
+            transparent
+        );
+
+    transition:
+        left 0.65s ease;
+}
+
+
+.projects-contact-btn:hover::before {
+    left: 120%;
+}
+
+
+.projects-contact-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 18px 40px
+        rgba(37, 99, 235, 0.35),
+        0 0 35px
+        rgba(124, 58, 237, 0.20);
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 850px) {
+
+    .project-card {
+        grid-template-columns: 75px 1fr;
+
+        gap: 20px;
+
+        padding: 30px;
+    }
+
+
+    .project-icon {
+        width: 65px;
+        height: 65px;
+
+        border-radius: 17px;
+
+        font-size: 26px;
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+    .projects-page {
+        padding:
+            45px
+            15px
+            70px;
+    }
+
+
+    .projects-header {
+        margin-bottom: 35px;
+    }
+
+
+    .projects-title {
+        font-size: 38px;
+
+        letter-spacing: -1.3px;
+    }
+
+
+    .projects-subtitle {
+        font-size: 17px;
+    }
+
+
+    .projects-intro {
+        font-size: 14px;
+
+        color:
+            rgba(255, 255, 255, 0.82);
+    }
+
+
+    .project-card {
+        display: block;
+
+        padding: 27px 22px;
+
+        border-radius: 21px;
+    }
+
+
+    .project-icon {
+        width: 58px;
+        height: 58px;
+
+        margin-bottom: 20px;
+
+        border-radius: 15px;
+
+        font-size: 24px;
+    }
+
+
+    .project-card h2 {
+        font-size: 21px;
+    }
+
+
+    .project-desc {
+        font-size: 14px;
+
+        color:
+            rgba(255, 255, 255, 0.84);
+
+        line-height: 1.8;
+    }
+
+
+    .project-tags span {
+        font-size: 10px;
+
+        padding: 7px 10px;
+    }
+
+
+    .projects-footer {
+        margin-top: 32px;
+    }
+
+}
+
+</style>
+
+
+
+<!-- =====================================================
+     PROJECTS PAGE
+===================================================== -->
+
+<section class="projects-page fade-in">
+
+
+    <div class="projects-wrapper">
+
+
+        <!-- =================================================
+             TOP BADGE
+        ================================================== -->
+
+        <div class="projects-badge-wrapper">
+
+
+            <div class="projects-badge">
+
+
+                <span class="projects-badge-dot"></span>
+
+
+                Selected Work
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="projects-header">
+
+
+            <h1 class="projects-title">
+
+                Featured
+
+                <span>
+                    Projects.
+                </span>
+
+            </h1>
+
+
+            <h2 class="projects-subtitle">
+
+                Automate. Integrate. Scale.
+
+            </h2>
+
+
+            <p class="projects-intro">
+
+                A selection of automation and AI projects
+                focused on reducing manual work, connecting
+                systems and building smarter business
+                workflows.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             PROJECT LIST
+        ================================================== -->
+
+        <div class="projects-list">
+
+
+
+            <!-- =================================================
+                 PROJECT 01
+            ================================================== -->
+
+            <div class="project-card">
+
+
+                <div class="project-icon">
+
+                    🎯
+
+                </div>
+
+
+                <div class="project-content">
+
+
+                    <span class="project-number">
+
+                        Project 01
+
+                    </span>
+
+
+                    <h2>
+
+                        AI Lead Qualification Agent
+
+                    </h2>
+
+
+                    <p class="project-desc">
+
+                        An intelligent lead automation system
+                        that collects incoming leads, analyzes
+                        their information, classifies them
+                        based on intent and quality, and
+                        automatically routes high-priority
+                        opportunities to the sales team.
+
+                    </p>
+
+
+                    <div class="project-tags">
+
+
+                        <span>
+                            n8n
+                        </span>
+
+
+                        <span>
+                            AI
+                        </span>
+
+
+                        <span>
+                            APIs
+                        </span>
+
+
+                        <span>
+                            Lead Scoring
+                        </span>
+
+
+                        <span>
+                            Automation
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PROJECT 02
+            ================================================== -->
+
+            <div class="project-card">
+
+
+                <div class="project-icon">
+
+                    🤖
+
+                </div>
+
+
+                <div class="project-content">
+
+
+                    <span class="project-number">
+
+                        Project 02
+
+                    </span>
+
+
+                    <h2>
+
+                        AI Customer Support Automation
+
+                    </h2>
+
+
+                    <p class="project-desc">
+
+                        An automated support workflow that
+                        receives customer inquiries, uses AI
+                        to understand the request, generates
+                        appropriate responses, and escalates
+                        complex cases when human assistance
+                        is required.
+
+                    </p>
+
+
+                    <div class="project-tags">
+
+
+                        <span>
+                            n8n
+                        </span>
+
+
+                        <span>
+                            AI Agents
+                        </span>
+
+
+                        <span>
+                            Webhooks
+                        </span>
+
+
+                        <span>
+                            API Integration
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PROJECT 03
+            ================================================== -->
+
+            <div class="project-card">
+
+
+                <div class="project-icon">
+
+                    🐍
+
+                </div>
+
+
+                <div class="project-content">
+
+
+                    <span class="project-number">
+
+                        Project 03
+
+                    </span>
+
+
+                    <h2>
+
+                        Python Business Automation
+
+                    </h2>
+
+
+                    <p class="project-desc">
+
+                        Custom Python automation designed to
+                        eliminate repetitive business tasks
+                        such as data processing, file handling,
+                        reporting, and API-based operations.
+
+                    </p>
+
+
+                    <div class="project-tags">
+
+
+                        <span>
+                            Python
+                        </span>
+
+
+                        <span>
+                            APIs
+                        </span>
+
+
+                        <span>
+                            Data Processing
+                        </span>
+
+
+                        <span>
+                            Automation
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOTTOM CTA
+        ================================================== -->
+
+        <div class="projects-footer">
+
+
+            <p>
+
+                Have a workflow that needs automation?
+                Let's turn it into a smarter system.
+
+            </p>
+
+
+            <a
+                href="/contact"
+                class="projects-contact-btn"
+            >
+
+                Start a Project &nbsp; →
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

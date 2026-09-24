@@ -1,0 +1,929 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =====================================================
+   CONTACT PAGE
+===================================================== */
+
+.contact-page {
+    min-height: calc(100vh - 70px);
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+
+    padding: 70px 20px;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(37, 99, 235, 0.22),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(124, 58, 237, 0.20),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #030712 0%,
+            #07101f 45%,
+            #050816 100%
+        );
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   BACKGROUND GLOW
+===================================================== */
+
+.contact-page::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    top: -250px;
+    left: -180px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 99, 235, 0.38);
+
+    filter: blur(130px);
+
+    pointer-events: none;
+
+    animation: blueGlow 9s ease-in-out infinite alternate;
+}
+
+
+.contact-page::after {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    bottom: -250px;
+    right: -180px;
+
+    border-radius: 50%;
+
+    background: rgba(124, 58, 237, 0.32);
+
+    filter: blur(130px);
+
+    pointer-events: none;
+
+    animation: purpleGlow 11s ease-in-out infinite alternate;
+}
+
+
+@keyframes blueGlow {
+
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(100px, 80px);
+    }
+
+}
+
+
+@keyframes purpleGlow {
+
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-100px, -70px);
+    }
+
+}
+
+
+/* =====================================================
+   CONTACT CARD
+===================================================== */
+
+.contact-card {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+    max-width: 650px;
+
+    padding: 50px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.09),
+            rgba(255, 255, 255, 0.035)
+        );
+
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 35px 90px rgba(0, 0, 0, 0.50),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    overflow: hidden;
+}
+
+
+/* Glass reflection */
+
+.contact-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    top: -220px;
+    left: -100px;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    filter: blur(90px);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+/* Top glow */
+
+.contact-card::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 15%;
+
+    width: 70%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(147, 197, 253, 0.7),
+        transparent
+    );
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.contact-header {
+    position: relative;
+
+    text-align: center;
+
+    margin-bottom: 38px;
+}
+
+
+.contact-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 14px;
+
+    margin-bottom: 20px;
+
+    border-radius: 50px;
+
+    background: rgba(59, 130, 246, 0.10);
+
+    border: 1px solid rgba(96, 165, 250, 0.22);
+
+    color: #93c5fd;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+}
+
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 5px #22c55e,
+        0 0 12px rgba(34, 197, 94, 0.7);
+
+    animation: statusPulse 2s infinite;
+}
+
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.45;
+    }
+
+}
+
+
+/* =====================================================
+   HEADING
+===================================================== */
+
+.contact-header h2 {
+    margin: 0 0 14px;
+
+    color: #ffffff;
+
+    font-size: clamp(34px, 5vw, 48px);
+
+    font-weight: 700;
+
+    letter-spacing: -1.8px;
+
+    line-height: 1.08;
+}
+
+
+.contact-header h2 span {
+    background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #818cf8,
+        #c084fc
+    );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+}
+
+
+.contact-header p {
+    max-width: 490px;
+
+    margin: 0 auto;
+
+    color: rgba(255, 255, 255, 0.58);
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   SUCCESS / ERROR MESSAGE
+===================================================== */
+
+.form-message {
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+
+    margin-bottom: 25px;
+
+    padding: 15px 17px;
+
+    border-radius: 13px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    line-height: 1.6;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    animation: messageAppear 0.4s ease;
+}
+
+
+@keyframes messageAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+.success-message {
+    color: #bbf7d0;
+
+    background: rgba(34, 197, 94, 0.10);
+
+    border: 1px solid rgba(34, 197, 94, 0.25);
+
+    box-shadow:
+        0 8px 25px rgba(34, 197, 94, 0.06);
+}
+
+
+.success-message i {
+    margin-top: 2px;
+
+    color: #22c55e;
+
+    font-size: 16px;
+}
+
+
+.error-message {
+    color: #fecaca;
+
+    background: rgba(239, 68, 68, 0.10);
+
+    border: 1px solid rgba(239, 68, 68, 0.25);
+
+    box-shadow:
+        0 8px 25px rgba(239, 68, 68, 0.06);
+}
+
+
+.error-message i {
+    margin-top: 2px;
+
+    color: #ef4444;
+
+    font-size: 16px;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.custom-contact-form {
+    position: relative;
+
+    width: 100%;
+}
+
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+
+.input-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: rgba(255, 255, 255, 0.78);
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.input-group input,
+.input-group textarea {
+    box-sizing: border-box;
+
+    width: 100%;
+
+    padding: 16px 18px;
+
+    border-radius: 13px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    background: rgba(255, 255, 255, 0.045);
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: all 0.3s ease;
+}
+
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.28);
+}
+
+
+.input-group input:hover,
+.input-group textarea:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+
+    background: rgba(255, 255, 255, 0.055);
+}
+
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: rgba(96, 165, 250, 0.65);
+
+    background: rgba(255, 255, 255, 0.07);
+
+    box-shadow:
+        0 0 0 4px rgba(59, 130, 246, 0.08),
+        0 0 25px rgba(59, 130, 246, 0.10);
+}
+
+
+.input-group textarea {
+    min-height: 145px;
+
+    resize: vertical;
+}
+
+
+/* =====================================================
+   SEND BUTTON
+===================================================== */
+
+.submit-btn {
+    position: relative;
+
+    width: 100%;
+
+    padding: 17px 25px;
+
+    margin-top: 5px;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 13px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5,
+        #7c3aed
+    );
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 12px 30px rgba(37, 99, 235, 0.25);
+
+    transition: 0.3s ease;
+}
+
+
+.submit-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+    );
+
+    transition: left 0.65s ease;
+}
+
+
+.submit-btn:hover::before {
+    left: 120%;
+}
+
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 18px 40px rgba(37, 99, 235, 0.35),
+        0 0 35px rgba(124, 58, 237, 0.20);
+}
+
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+
+/* Sending state */
+
+.submit-btn:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.75;
+
+    transform: none;
+}
+
+
+/* =====================================================
+   PRIVACY
+===================================================== */
+
+.privacy-text {
+    margin-top: 18px;
+
+    text-align: center;
+
+    color: rgba(255, 255, 255, 0.30);
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+    .contact-page {
+        min-height: 100vh;
+
+        padding: 40px 15px;
+
+        align-items: flex-start;
+    }
+
+
+    .contact-card {
+        padding: 35px 22px;
+
+        border-radius: 22px;
+    }
+
+
+    .contact-header {
+        margin-bottom: 30px;
+    }
+
+
+    .contact-header h2 {
+        font-size: 33px;
+    }
+
+
+    .contact-header p {
+        font-size: 14px;
+    }
+
+
+    .input-group input,
+    .input-group textarea {
+        padding: 14px 15px;
+
+        font-size: 14px;
+    }
+
+
+    .submit-btn {
+        padding: 15px 20px;
+    }
+
+
+    .form-message {
+        padding: 13px 14px;
+
+        font-size: 12px;
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     CONTACT PAGE
+===================================================== -->
+
+<section class="contact-page fade-in">
+
+
+    <!-- =================================================
+         CONTACT CARD
+    ================================================== -->
+
+    <div class="contact-card">
+
+
+        <!-- HEADER -->
+
+        <div class="contact-header">
+
+
+            <div class="contact-badge">
+
+                <span class="status-dot"></span>
+
+                Available for projects
+
+            </div>
+
+
+            <h2>
+
+                Let's Build Something
+
+                <span>Amazing.</span>
+
+            </h2>
+
+
+            <p>
+
+                Have an AI automation idea, workflow challenge,
+                or project in mind? Tell me about it and let's
+                turn your idea into something powerful.
+
+            </p>
+
+
+        </div>
+
+
+        <!-- =================================================
+             SUCCESS MESSAGE
+        ================================================== -->
+
+        {% if success_msg %}
+
+            <div class="form-message success-message">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <span>
+                    {{ success_msg }}
+                </span>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             ERROR MESSAGE
+        ================================================== -->
+
+        {% if error_msg %}
+
+            <div class="form-message error-message">
+
+                <i class="fa-solid fa-circle-exclamation"></i>
+
+                <span>
+                    {{ error_msg }}
+                </span>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             CONTACT FORM
+        ================================================== -->
+
+        <form
+            class="custom-contact-form"
+            id="contact-form"
+            action="/contact"
+            method="POST"
+        >
+
+
+            <!-- NAME -->
+
+            <div class="input-group">
+
+                <label for="name">
+                    Your Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                    maxlength="100"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="input-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    maxlength="200"
+                    required
+                >
+
+            </div>
+
+
+            <!-- WHATSAPP -->
+
+            <div class="input-group">
+
+                <label for="whatsapp">
+                    WhatsApp Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="whatsapp"
+                    name="whatsapp"
+                    placeholder="+92 300 1234567"
+                    autocomplete="tel"
+                    maxlength="30"
+                    required
+                >
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div class="input-group">
+
+                <label for="message">
+                    Tell Me About Your Project
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="What are you looking to build or automate?"
+                    maxlength="5000"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- SEND BUTTON -->
+
+            <button
+                type="submit"
+                class="submit-btn"
+                id="submit-button"
+            >
+
+                <span id="submit-button-text">
+                    Send Message &nbsp; →
+                </span>
+
+            </button>
+
+
+            <!-- PRIVACY -->
+
+            <div class="privacy-text">
+
+                Your information stays private. No spam, ever.
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</section>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const contactForm =
+        document.getElementById("contact-form");
+
+    const submitButton =
+        document.getElementById("submit-button");
+
+    const submitButtonText =
+        document.getElementById("submit-button-text");
+
+
+    if (contactForm && submitButton && submitButtonText) {
+
+        contactForm.addEventListener("submit", function () {
+
+            /*
+                Browser validation happens before this event.
+                Once valid, disable the button so the visitor
+                cannot accidentally submit the form twice.
+            */
+
+            submitButton.disabled = true;
+
+            submitButtonText.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i>&nbsp;&nbsp; Sending...';
+
+        });
+
+    }
+
+});
+
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,1475 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =====================================================
+   ABOUT PAGE
+===================================================== */
+
+.about-page {
+    min-height: calc(100vh - 70px);
+    width: 100%;
+
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 70px 20px;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(37, 99, 235, 0.22),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(124, 58, 237, 0.20),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #030712 0%,
+            #07101f 45%,
+            #050816 100%
+        );
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   BACKGROUND GLOW
+===================================================== */
+
+.about-page::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    top: -250px;
+    left: -180px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 99, 235, 0.38);
+
+    filter: blur(130px);
+
+    pointer-events: none;
+
+    animation: aboutBlueGlow 9s ease-in-out infinite alternate;
+}
+
+
+.about-page::after {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    bottom: -250px;
+    right: -180px;
+
+    border-radius: 50%;
+
+    background: rgba(124, 58, 237, 0.32);
+
+    filter: blur(130px);
+
+    pointer-events: none;
+
+    animation: aboutPurpleGlow 11s ease-in-out infinite alternate;
+}
+
+
+@keyframes aboutBlueGlow {
+
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(100px, 80px);
+    }
+
+}
+
+
+@keyframes aboutPurpleGlow {
+
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-100px, -70px);
+    }
+
+}
+
+
+/* =====================================================
+   MAIN WRAPPER
+===================================================== */
+
+.about-wrapper {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 1100px;
+}
+
+
+/* =====================================================
+   TOP BADGE
+===================================================== */
+
+.about-badge-wrapper {
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+
+.about-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 15px;
+
+    border-radius: 50px;
+
+    background: rgba(59, 130, 246, 0.10);
+
+    border: 1px solid rgba(96, 165, 250, 0.22);
+
+    color: #93c5fd;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+}
+
+
+.about-badge-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 5px #60a5fa,
+        0 0 12px rgba(96, 165, 250, 0.8);
+
+    animation: badgePulse 2s infinite;
+}
+
+
+@keyframes badgePulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+}
+
+
+/* =====================================================
+   MAIN HEADING
+===================================================== */
+
+.about-heading {
+    max-width: 800px;
+
+    margin: 0 auto 45px;
+
+    text-align: center;
+}
+
+
+.about-heading h1 {
+    margin: 0 0 16px;
+
+    color: #ffffff;
+
+    font-size: clamp(38px, 6vw, 58px);
+
+    font-weight: 700;
+
+    letter-spacing: -2px;
+
+    line-height: 1.05;
+}
+
+
+.about-heading h1 span {
+    background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #818cf8,
+        #c084fc
+    );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+}
+
+
+/* =====================================================
+   UPDATED:
+   Brighter top description
+===================================================== */
+
+.about-heading p {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: rgba(255, 255, 255, 0.80);
+
+    font-size: 15px;
+
+    font-weight: 400;
+
+    line-height: 1.8;
+}
+
+
+/* =====================================================
+   MAIN GLASS CARD
+===================================================== */
+
+.about-main-card {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 0.9fr 1.4fr;
+
+    gap: 45px;
+
+    padding: 45px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.09),
+            rgba(255, 255, 255, 0.035)
+        );
+
+    backdrop-filter: blur(25px);
+
+    -webkit-backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+
+    box-shadow:
+        0 35px 90px rgba(0, 0, 0, 0.50),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    overflow: hidden;
+}
+
+
+/* Glass reflection */
+
+.about-main-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    top: -280px;
+    left: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.14);
+
+    filter: blur(90px);
+
+    pointer-events: none;
+}
+
+
+/* Top glowing line */
+
+.about-main-card::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 15%;
+
+    width: 70%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(147, 197, 253, 0.7),
+        transparent
+    );
+}
+
+
+/* =====================================================
+   LEFT PROFILE
+===================================================== */
+
+.about-profile {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   PROFILE AVATAR
+===================================================== */
+
+.about-avatar {
+    position: relative;
+
+    width: 180px;
+    height: 180px;
+
+    margin-bottom: 25px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.25),
+            rgba(124, 58, 237, 0.25)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.35),
+        0 0 50px rgba(59, 130, 246, 0.16);
+
+    overflow: hidden;
+}
+
+
+.about-avatar::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -2px;
+
+    border-radius: 50%;
+
+    padding: 2px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #60a5fa,
+            #818cf8,
+            #c084fc
+        );
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite: xor;
+
+    mask-composite: exclude;
+
+    pointer-events: none;
+}
+
+
+.avatar-initials {
+    background:
+        linear-gradient(
+            90deg,
+            #60a5fa,
+            #c084fc
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    font-size: 58px;
+
+    font-weight: 800;
+
+    letter-spacing: -5px;
+}
+
+
+.about-profile h2 {
+    margin: 0 0 7px;
+
+    color: #ffffff;
+
+    font-size: 26px;
+
+    font-weight: 700;
+}
+
+
+.about-role {
+    margin: 0;
+
+    color: #93c5fd;
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+
+/* =====================================================
+   AVAILABILITY
+===================================================== */
+
+.availability {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 17px;
+
+    padding: 8px 13px;
+
+    border-radius: 50px;
+
+    background: rgba(34, 197, 94, 0.08);
+
+    border: 1px solid rgba(34, 197, 94, 0.18);
+
+    color: #86efac;
+
+    font-size: 11px;
+
+    font-weight: 500;
+}
+
+
+.availability-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 8px rgba(34, 197, 94, 0.9);
+
+    animation: availabilityPulse 2s infinite;
+}
+
+
+@keyframes availabilityPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+}
+
+
+/* =====================================================
+   RIGHT ABOUT CONTENT
+===================================================== */
+
+.about-content {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+/* =====================================================
+   UPDATED:
+   WHO I AM is now larger and brighter
+===================================================== */
+
+.about-small-title {
+    margin-bottom: 12px;
+
+    color: #93c5fd;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 18px rgba(96, 165, 250, 0.30);
+}
+
+
+.about-content h3 {
+    margin: 0 0 20px;
+
+    color: #ffffff;
+
+    font-size: clamp(26px, 4vw, 36px);
+
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    letter-spacing: -1px;
+}
+
+
+.about-content h3 span {
+    color: #93c5fd;
+}
+
+
+/* =====================================================
+   UPDATED:
+   Description is brighter and easier to read
+===================================================== */
+
+.about-description {
+    margin: 0 0 17px;
+
+    color: rgba(255, 255, 255, 0.84);
+
+    font-size: 15px;
+
+    font-weight: 400;
+
+    line-height: 1.9;
+}
+
+
+.about-description strong {
+    color: #ffffff;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   SKILLS
+===================================================== */
+
+.about-skills {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin-top: 12px;
+}
+
+
+.about-skill {
+    padding: 8px 13px;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    color: rgba(255, 255, 255, 0.82);
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.about-skill:hover {
+    transform: translateY(-3px);
+
+    color: #ffffff;
+
+    background: rgba(59, 130, 246, 0.10);
+
+    border-color: rgba(96, 165, 250, 0.30);
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.about-stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-top: 22px;
+}
+
+
+.about-stat {
+    padding: 17px 12px;
+
+    text-align: center;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+
+
+.about-stat:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(96, 165, 250, 0.28);
+
+    background: rgba(59, 130, 246, 0.07);
+}
+
+
+.about-stat-icon {
+    margin-bottom: 7px;
+
+    font-size: 20px;
+}
+
+
+.about-stat strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.about-stat span {
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   CTA BUTTONS
+===================================================== */
+
+.about-cta {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+
+.about-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 13px 20px;
+
+    border-radius: 11px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+.about-btn-primary {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #7c3aed
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    box-shadow:
+        0 10px 25px rgba(37, 99, 235, 0.20);
+}
+
+
+.about-btn-primary:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 35px rgba(37, 99, 235, 0.32);
+}
+
+
+.about-btn-secondary {
+    color: rgba(255, 255, 255, 0.85);
+
+    background: rgba(255, 255, 255, 0.055);
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+
+.about-btn-secondary:hover {
+    transform: translateY(-3px);
+
+    color: #ffffff;
+
+    border-color: rgba(96, 165, 250, 0.30);
+}
+
+
+/* =====================================================
+   BOTTOM GLASS CARDS
+===================================================== */
+
+.about-bottom-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-top: 20px;
+}
+
+
+.about-mini-card {
+    position: relative;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.07),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+
+
+.about-mini-card:hover {
+    transform: translateY(-6px);
+
+    border-color: rgba(96, 165, 250, 0.26);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.09),
+            rgba(124, 58, 237, 0.05)
+        );
+}
+
+
+.mini-icon {
+    width: 43px;
+    height: 43px;
+
+    margin-bottom: 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.16),
+            rgba(124, 58, 237, 0.16)
+        );
+
+    border: 1px solid rgba(96, 165, 250, 0.18);
+
+    font-size: 20px;
+}
+
+
+.about-mini-card h4 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   UPDATED:
+   Bottom-card descriptions are brighter too
+===================================================== */
+
+.about-mini-card p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.74);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 850px) {
+
+    .about-main-card {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        padding: 40px 30px;
+    }
+
+
+    .about-content {
+        text-align: center;
+    }
+
+
+    .about-skills {
+        justify-content: center;
+    }
+
+
+    .about-cta {
+        justify-content: center;
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+    .about-page {
+        padding: 45px 15px;
+    }
+
+
+    .about-heading {
+        margin-bottom: 30px;
+    }
+
+
+    .about-heading h1 {
+        font-size: 38px;
+
+        letter-spacing: -1.3px;
+    }
+
+
+    .about-heading p {
+        font-size: 14px;
+
+        color: rgba(255, 255, 255, 0.82);
+    }
+
+
+    .about-main-card {
+        padding: 32px 20px;
+
+        border-radius: 22px;
+    }
+
+
+    .about-avatar {
+        width: 145px;
+
+        height: 145px;
+    }
+
+
+    .avatar-initials {
+        font-size: 48px;
+    }
+
+
+    .about-small-title {
+        font-size: 17px;
+    }
+
+
+    .about-content h3 {
+        font-size: 27px;
+    }
+
+
+    .about-description {
+        font-size: 14px;
+
+        color: rgba(255, 255, 255, 0.86);
+    }
+
+
+    .about-stats {
+        grid-template-columns: 1fr;
+    }
+
+
+    .about-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .about-cta {
+        flex-direction: column;
+    }
+
+
+    .about-btn {
+        width: 100%;
+
+        box-sizing: border-box;
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     ABOUT PAGE
+===================================================== -->
+
+<section class="about-page fade-in">
+
+    <div class="about-wrapper">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="about-badge-wrapper">
+
+            <div class="about-badge">
+
+                <span class="about-badge-dot"></span>
+
+                Get to know me
+
+            </div>
+
+        </div>
+
+
+        <div class="about-heading">
+
+            <h1>
+
+                About
+
+                <span>Me.</span>
+
+            </h1>
+
+
+            <p>
+
+                AI Automation Engineer focused on building
+                intelligent systems that simplify work,
+                connect tools and turn repetitive processes
+                into automated workflows.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MAIN GLASS CARD
+        ================================================== -->
+
+        <div class="about-main-card">
+
+
+            <!-- =================================================
+                 LEFT PROFILE
+            ================================================== -->
+
+            <div class="about-profile">
+
+
+                <div class="about-avatar">
+
+                    <span class="avatar-initials">
+
+                        IM
+
+                    </span>
+
+                </div>
+
+
+                <h2>
+
+                    Ihtisham Mujahid
+
+                </h2>
+
+
+                <p class="about-role">
+
+                    AI Automation Engineer
+
+                </p>
+
+
+                <div class="availability">
+
+                    <span class="availability-dot"></span>
+
+                    Available for projects
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT CONTENT
+            ================================================== -->
+
+            <div class="about-content">
+
+
+                <!-- Larger WHO I AM -->
+
+                <span class="about-small-title">
+
+                    Who I Am
+
+                </span>
+
+
+                <h3>
+
+                    I build automation that makes
+
+                    <span>work smarter.</span>
+
+                </h3>
+
+
+                <!-- Brighter description -->
+
+                <p class="about-description">
+
+                    I'm <strong>Ihtisham Mujahid</strong>, an
+                    AI Automation Engineer with a focus on
+                    designing practical automation systems
+                    using tools such as n8n and Python.
+
+                </p>
+
+
+                <p class="about-description">
+
+                    I enjoy connecting APIs, automating
+                    repetitive workflows, building AI-powered
+                    processes and turning complex manual tasks
+                    into simple automated systems.
+
+                </p>
+
+
+
+                <!-- =================================================
+                     SKILLS
+                ================================================== -->
+
+                <div class="about-skills">
+
+
+                    <span class="about-skill">
+                        n8n
+                    </span>
+
+
+                    <span class="about-skill">
+                        Python
+                    </span>
+
+
+                    <span class="about-skill">
+                        AI Automation
+                    </span>
+
+
+                    <span class="about-skill">
+                        API Integration
+                    </span>
+
+
+                    <span class="about-skill">
+                        Webhooks
+                    </span>
+
+
+                    <span class="about-skill">
+                        Make
+                    </span>
+
+
+                    <span class="about-skill">
+                        Zapier
+                    </span>
+
+
+                    <span class="about-skill">
+                        Machine Learning
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SPECIALIZATION
+                ================================================== -->
+
+                <div class="about-stats">
+
+
+                    <div class="about-stat">
+
+                        <div class="about-stat-icon">
+                            ⚡
+                        </div>
+
+                        <strong>
+                            Automation
+                        </strong>
+
+                        <span>
+                            Smart workflows
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="about-stat">
+
+                        <div class="about-stat-icon">
+                            🤖
+                        </div>
+
+                        <strong>
+                            AI
+                        </strong>
+
+                        <span>
+                            Intelligent systems
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="about-stat">
+
+                        <div class="about-stat-icon">
+                            🔗
+                        </div>
+
+                        <strong>
+                            Integrations
+                        </strong>
+
+                        <span>
+                            APIs & Webhooks
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     BUTTONS
+                ================================================== -->
+
+                <div class="about-cta">
+
+
+                    <a
+                        href="/projects"
+                        class="about-btn about-btn-primary"
+                    >
+
+                        View My Projects →
+
+                    </a>
+
+
+                    <a
+                        href="/contact"
+                        class="about-btn about-btn-secondary"
+                    >
+
+                        Let's Work Together
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOTTOM CARDS
+        ================================================== -->
+
+        <div class="about-bottom-grid">
+
+
+            <!-- WORKFLOW AUTOMATION -->
+
+            <div class="about-mini-card">
+
+
+                <div class="mini-icon">
+
+                    ⚙️
+
+                </div>
+
+
+                <h4>
+
+                    Workflow Automation
+
+                </h4>
+
+
+                <p>
+
+                    Automating repetitive business processes
+                    and connecting applications into reliable
+                    workflows.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- AI INTEGRATION -->
+
+            <div class="about-mini-card">
+
+
+                <div class="mini-icon">
+
+                    🧠
+
+                </div>
+
+
+                <h4>
+
+                    AI Integration
+
+                </h4>
+
+
+                <p>
+
+                    Integrating AI into workflows to classify,
+                    generate, analyze and intelligently process
+                    information.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- PYTHON AUTOMATION -->
+
+            <div class="about-mini-card">
+
+
+                <div class="mini-icon">
+
+                    🐍
+
+                </div>
+
+
+                <h4>
+
+                    Python Automation
+
+                </h4>
+
+
+                <p>
+
+                    Building custom Python solutions for
+                    automation, data processing and API-driven
+                    tasks.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,2392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Ihtisham Mujahid | AI Automation Engineer</title>
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- GOOGLE FONT -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <!-- THREE.JS -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+    ></script>
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ====================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            background: #030712;
+
+            color: #ffffff;
+
+            overflow-x: hidden;
+        }
+
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        button {
+            font-family: inherit;
+        }
+
+
+        :root {
+            --sidebar-width: 285px;
+            --sidebar-collapsed-width: 86px;
+        }
+
+
+        /* =====================================================
+           BACKGROUND CANVAS
+        ====================================================== */
+
+        #bg-canvas {
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            z-index: -10;
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ====================================================== */
+
+        .portfolio-sidebar {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width:
+                var(--sidebar-width);
+
+            height: 100vh;
+
+            z-index: 10000;
+
+            display: flex;
+
+            flex-direction: column;
+
+            padding:
+                22px
+                16px
+                18px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(8, 15, 29, 0.97),
+                    rgba(3, 7, 18, 0.985)
+                );
+
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+
+            border-right:
+                1px solid
+                rgba(255, 255, 255, 0.09);
+
+            box-shadow:
+                20px
+                0
+                60px
+                rgba(0, 0, 0, 0.18);
+
+            transition:
+                width
+                0.35s
+                cubic-bezier(
+                    0.22,
+                    1,
+                    0.36,
+                    1
+                );
+        }
+
+
+        /* BLUE SIDEBAR GLOW */
+
+        .portfolio-sidebar::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            top: -180px;
+            left: -130px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(37, 99, 235, 0.22);
+
+            filter: blur(100px);
+
+            pointer-events: none;
+        }
+
+
+        /* PURPLE SIDEBAR GLOW */
+
+        .portfolio-sidebar::after {
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            bottom: -170px;
+            right: -140px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124, 58, 237, 0.16);
+
+            filter: blur(100px);
+
+            pointer-events: none;
+        }
+
+
+        .sidebar-content {
+            position: relative;
+
+            z-index: 2;
+
+            min-height: 0;
+
+            flex: 1;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        /* =====================================================
+           SIDEBAR TOP
+        ====================================================== */
+
+        .sidebar-top {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            min-height: 62px;
+
+            padding:
+                5px
+                5px
+                18px;
+
+            margin-bottom: 16px;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+        }
+
+
+        /* =====================================================
+           LOGO
+        ====================================================== */
+
+        .brand-logo {
+            width: 47px;
+            height: 47px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            color: #ffffff;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            letter-spacing: -0.5px;
+
+            text-decoration: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.15);
+
+            box-shadow:
+                0 10px 30px
+                rgba(37, 99, 235, 0.25),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.20);
+        }
+
+
+        .brand-text {
+            min-width: 0;
+
+            flex: 1;
+
+            overflow: hidden;
+
+            transition:
+                opacity 0.2s ease,
+                width 0.3s ease;
+        }
+
+
+        .brand-text h2 {
+            margin: 0;
+
+            white-space: nowrap;
+
+            font-size: 17px;
+            font-weight: 700;
+
+            letter-spacing: -0.3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #bfdbfe,
+                    #c4b5fd
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+        }
+
+
+        .brand-text p {
+            margin:
+                2px
+                0
+                0;
+
+            white-space: nowrap;
+
+            color:
+                rgba(255, 255, 255, 0.48);
+
+            font-size: 8px;
+            font-weight: 500;
+
+            letter-spacing: 0.8px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           COLLAPSE BUTTON
+        ====================================================== */
+
+        .sidebar-collapse-btn {
+            width: 32px;
+            height: 32px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 0;
+
+            cursor: pointer;
+
+            color:
+                rgba(255, 255, 255, 0.58);
+
+            font-size: 12px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.3s ease;
+        }
+
+
+        .sidebar-collapse-btn:hover {
+            color: #ffffff;
+
+            background:
+                rgba(59, 130, 246, 0.10);
+
+            border-color:
+                rgba(96, 165, 250, 0.20);
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ====================================================== */
+
+        .sidebar-navigation {
+            min-height: 0;
+
+            flex: 1;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            scrollbar-width: thin;
+
+            scrollbar-color:
+                rgba(255, 255, 255, 0.10)
+                transparent;
+        }
+
+
+        .sidebar-navigation::-webkit-scrollbar {
+            width: 4px;
+        }
+
+
+        .sidebar-navigation::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+        }
+
+
+        .navigation-label {
+            margin:
+                7px
+                12px
+                10px;
+
+            color:
+                rgba(255, 255, 255, 0.32);
+
+            font-size: 9px;
+            font-weight: 600;
+
+            letter-spacing: 1.4px;
+
+            text-transform: uppercase;
+
+            white-space: nowrap;
+
+            transition:
+                opacity 0.2s ease;
+        }
+
+
+        /* =====================================================
+           SIDEBAR LINKS
+        ====================================================== */
+
+        .sidebar-link {
+            position: relative;
+
+            width: 100%;
+
+            min-height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 5px;
+
+            padding:
+                0
+                14px;
+
+            color:
+                rgba(255, 255, 255, 0.72);
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 500;
+
+            border-radius: 12px;
+
+            border:
+                1px solid
+                transparent;
+
+            background:
+                transparent;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+
+        .sidebar-link:hover {
+            color: #ffffff;
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            border-color:
+                rgba(255, 255, 255, 0.06);
+        }
+
+
+        .sidebar-link.active {
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37, 99, 235, 0.16),
+                    rgba(124, 58, 237, 0.09)
+                );
+
+            border-color:
+                rgba(96, 165, 250, 0.16);
+        }
+
+
+        .sidebar-link.active::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            width: 3px;
+            height: 20px;
+
+            border-radius:
+                0
+                4px
+                4px
+                0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #60a5fa,
+                    #818cf8
+                );
+
+            box-shadow:
+                0 0 12px
+                rgba(96, 165, 250, 0.45);
+        }
+
+
+        .sidebar-link-icon {
+            width: 22px;
+
+            flex-shrink: 0;
+
+            text-align: center;
+
+            color:
+                rgba(147, 197, 253, 0.80);
+
+            font-size: 14px;
+        }
+
+
+        .sidebar-link.active
+        .sidebar-link-icon {
+            color: #93c5fd;
+        }
+
+
+        .sidebar-link-text {
+            min-width: 0;
+
+            flex: 1;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            transition:
+                opacity 0.2s ease;
+        }
+
+
+        /* =====================================================
+           PROJECTS MENU
+        ====================================================== */
+
+        .projects-navigation {
+            position: relative;
+
+            margin-bottom: 5px;
+        }
+
+
+        .projects-toggle {
+            appearance: none;
+            -webkit-appearance: none;
+
+            cursor: pointer;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            text-align: left;
+        }
+
+
+        .projects-chevron {
+            margin-left: auto;
+
+            color:
+                rgba(255, 255, 255, 0.40);
+
+            font-size: 10px;
+
+            flex-shrink: 0;
+
+            transition:
+                transform 0.3s ease,
+                color 0.3s ease;
+        }
+
+
+        .projects-toggle.open
+        .projects-chevron {
+            transform:
+                rotate(180deg);
+
+            color: #93c5fd;
+        }
+
+
+        /* =====================================================
+           PROJECT SUBMENU
+        ====================================================== */
+
+        .project-submenu {
+            position: relative;
+
+            display: grid;
+
+            grid-template-rows: 0fr;
+
+            margin:
+                0
+                0
+                0
+                25px;
+
+            padding-left: 16px;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                grid-template-rows 0.35s ease,
+                opacity 0.3s ease,
+                visibility 0.3s ease,
+                margin-bottom 0.35s ease;
+        }
+
+
+        .project-submenu::before {
+            content: "";
+
+            position: absolute;
+
+            top: 4px;
+            bottom: 4px;
+            left: 0;
+
+            width: 1px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(96, 165, 250, 0.30),
+                    rgba(192, 132, 252, 0.15)
+                );
+        }
+
+
+        .project-submenu-inner {
+            min-height: 0;
+
+            overflow: hidden;
+        }
+
+
+        .project-submenu.open {
+            grid-template-rows: 1fr;
+
+            margin-bottom: 8px;
+
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+
+        .project-sub-link {
+            position: relative;
+
+            min-height: 39px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding:
+                0
+                11px;
+
+            margin-bottom: 4px;
+
+            color:
+                rgba(255, 255, 255, 0.54);
+
+            text-decoration: none;
+
+            font-size: 11px;
+            font-weight: 500;
+
+            border-radius: 9px;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+
+        .project-sub-link:hover {
+            transform:
+                translateX(3px);
+
+            color: #ffffff;
+
+            background:
+                rgba(255, 255, 255, 0.04);
+        }
+
+
+        .project-dot {
+            width: 6px;
+            height: 6px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: #60a5fa;
+
+            box-shadow:
+                0 0 7px
+                rgba(96, 165, 250, 0.50);
+        }
+
+
+        .project-dot.previous {
+            background: #c084fc;
+
+            box-shadow:
+                0 0 7px
+                rgba(192, 132, 252, 0.45);
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ====================================================== */
+
+        .sidebar-bottom {
+            position: relative;
+
+            z-index: 3;
+
+            flex-shrink: 0;
+
+            padding-top: 15px;
+
+            margin-top: 15px;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+        }
+
+
+        /* =====================================================
+           AVAILABILITY CARD
+        ====================================================== */
+
+        .availability-card {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                11px
+                12px;
+
+            margin-bottom: 13px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.055);
+        }
+
+
+        .availability-dot {
+            width: 8px;
+            height: 8px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 9px
+                rgba(34, 197, 94, 0.65);
+        }
+
+
+        .availability-text {
+            min-width: 0;
+
+            overflow: hidden;
+        }
+
+
+        .availability-text strong {
+            display: block;
+
+            white-space: nowrap;
+
+            color:
+                rgba(255, 255, 255, 0.78);
+
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+
+        .availability-text span {
+            display: block;
+
+            margin-top: 1px;
+
+            white-space: nowrap;
+
+            color:
+                rgba(255, 255, 255, 0.37);
+
+            font-size: 8px;
+        }
+
+
+        /* =====================================================
+           SOCIAL LINKS
+        ====================================================== */
+
+        .sidebar-socials {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 7px;
+        }
+
+
+        .sidebar-social-link {
+            position: relative;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color:
+                rgba(255, 255, 255, 0.65);
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.055);
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .sidebar-social-link:hover {
+            transform:
+                translateY(-3px);
+
+            color: #ffffff;
+
+            background:
+                rgba(59, 130, 246, 0.10);
+
+            border-color:
+                rgba(96, 165, 250, 0.18);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.20);
+        }
+
+
+        /* WHATSAPP */
+
+        .sidebar-social-link.whatsapp:hover {
+            color: #4ade80;
+
+            background:
+                rgba(34, 197, 94, 0.08);
+
+            border-color:
+                rgba(34, 197, 94, 0.18);
+        }
+
+
+        /* LINKEDIN */
+
+        .sidebar-social-link.linkedin:hover {
+            color: #60a5fa;
+
+            background:
+                rgba(37, 99, 235, 0.09);
+
+            border-color:
+                rgba(96, 165, 250, 0.20);
+        }
+
+
+        /* GITHUB */
+
+        .sidebar-social-link.github:hover {
+            color: #ffffff;
+
+            background:
+                rgba(255, 255, 255, 0.07);
+
+            border-color:
+                rgba(255, 255, 255, 0.14);
+        }
+
+
+        /* INSTAGRAM */
+
+        .sidebar-social-link.instagram:hover {
+            color: #f0abfc;
+
+            background:
+                rgba(192, 38, 211, 0.08);
+
+            border-color:
+                rgba(232, 121, 249, 0.18);
+        }
+
+
+        /* =====================================================
+           PAGE CONTAINER
+        ====================================================== */
+
+        .page-container {
+            position: relative;
+
+            width:
+                calc(
+                    100% -
+                    var(--sidebar-width)
+                );
+
+            min-height: 100vh;
+
+            margin-left:
+                var(--sidebar-width);
+
+            transition:
+                width
+                0.35s
+                cubic-bezier(
+                    0.22,
+                    1,
+                    0.36,
+                    1
+                ),
+
+                margin-left
+                0.35s
+                cubic-bezier(
+                    0.22,
+                    1,
+                    0.36,
+                    1
+                );
+        }
+
+
+        /* =====================================================
+           COLLAPSED SIDEBAR
+        ====================================================== */
+
+        body.sidebar-collapsed
+        .portfolio-sidebar {
+            width:
+                var(--sidebar-collapsed-width);
+        }
+
+
+        body.sidebar-collapsed
+        .page-container {
+            width:
+                calc(
+                    100% -
+                    var(--sidebar-collapsed-width)
+                );
+
+            margin-left:
+                var(--sidebar-collapsed-width);
+        }
+
+
+        body.sidebar-collapsed
+        .brand-text {
+            width: 0;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        body.sidebar-collapsed
+        .sidebar-top {
+            flex-direction: column;
+
+            gap: 10px;
+
+            padding-bottom: 14px;
+        }
+
+
+        body.sidebar-collapsed
+        .sidebar-collapse-btn {
+            transform:
+                rotate(180deg);
+        }
+
+
+        body.sidebar-collapsed
+        .navigation-label {
+            opacity: 0;
+
+            height: 10px;
+
+            margin:
+                4px
+                0
+                7px;
+
+            overflow: hidden;
+        }
+
+
+        body.sidebar-collapsed
+        .sidebar-link {
+            justify-content: center;
+
+            padding:
+                0
+                10px;
+        }
+
+
+        body.sidebar-collapsed
+        .sidebar-link-text {
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        body.sidebar-collapsed
+        .projects-chevron {
+            display: none;
+        }
+
+
+        body.sidebar-collapsed
+        .project-submenu {
+            display: none;
+        }
+
+
+        body.sidebar-collapsed
+        .availability-card {
+            justify-content: center;
+
+            padding:
+                12px
+                5px;
+        }
+
+
+        body.sidebar-collapsed
+        .availability-text {
+            display: none;
+        }
+
+
+        body.sidebar-collapsed
+        .sidebar-socials {
+            grid-template-columns: 1fr;
+        }
+
+
+        /* TOOLTIP WHEN SIDEBAR IS COLLAPSED */
+
+        body.sidebar-collapsed
+        .sidebar-link::after {
+            content:
+                attr(data-label);
+
+            position: absolute;
+
+            left: 62px;
+            top: 50%;
+
+            transform:
+                translateY(-50%)
+                translateX(-5px);
+
+            padding:
+                7px
+                10px;
+
+            border-radius: 8px;
+
+            color: #ffffff;
+
+            font-size: 10px;
+            font-weight: 500;
+
+            white-space: nowrap;
+
+            background:
+                rgba(15, 23, 42, 0.96);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.30);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        body.sidebar-collapsed
+        .sidebar-link:hover::after {
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateY(-50%)
+                translateX(0);
+        }
+
+
+        /* =====================================================
+           MOBILE BUTTON
+        ====================================================== */
+
+        .mobile-sidebar-button {
+            display: none;
+
+            position: fixed;
+
+            top: 18px;
+            left: 18px;
+
+            z-index: 20002;
+
+            width: 48px;
+            height: 48px;
+
+            padding: 0;
+
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            color: #ffffff;
+
+            font-size: 17px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.14);
+
+            background:
+                rgba(8, 15, 29, 0.90);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.30);
+        }
+
+
+        /* =====================================================
+           MOBILE OVERLAY
+        ====================================================== */
+
+        .sidebar-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9998;
+
+            background:
+                rgba(0, 0, 0, 0.52);
+
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.3s ease,
+                visibility 0.3s ease;
+        }
+
+
+        /* =====================================================
+           TABLET
+        ====================================================== */
+
+        @media (
+            max-width: 1050px
+        ) and (
+            min-width: 751px
+        ) {
+
+            :root {
+                --sidebar-width: 250px;
+            }
+
+
+            .portfolio-sidebar {
+                padding-left: 13px;
+                padding-right: 13px;
+            }
+
+
+            .brand-text h2 {
+                font-size: 15px;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (
+            max-width: 750px
+        ) {
+
+            .portfolio-sidebar {
+                width:
+                    285px !important;
+
+                max-width: 85vw;
+
+                transform:
+                    translateX(-105%);
+
+                box-shadow:
+                    25px
+                    0
+                    70px
+                    rgba(0, 0, 0, 0.50);
+
+                transition:
+                    transform
+                    0.38s
+                    cubic-bezier(
+                        0.22,
+                        1,
+                        0.36,
+                        1
+                    );
+            }
+
+
+            body.mobile-sidebar-open
+            .portfolio-sidebar {
+                transform:
+                    translateX(0);
+            }
+
+
+            .page-container,
+            body.sidebar-collapsed
+            .page-container {
+                width: 100%;
+
+                margin-left: 0;
+            }
+
+
+            .sidebar-collapse-btn {
+                display: none;
+            }
+
+
+            .mobile-sidebar-button {
+                display: flex;
+            }
+
+
+            body.mobile-sidebar-open
+            .mobile-sidebar-button {
+                opacity: 0;
+
+                pointer-events: none;
+            }
+
+
+            .sidebar-overlay {
+                display: block;
+            }
+
+
+            body.mobile-sidebar-open
+            .sidebar-overlay {
+                opacity: 1;
+
+                visibility: visible;
+
+                pointer-events: auto;
+            }
+
+
+            body.mobile-sidebar-open {
+                overflow: hidden;
+            }
+
+
+            body.sidebar-collapsed
+            .brand-text {
+                width: auto;
+
+                opacity: 1;
+
+                pointer-events: auto;
+            }
+
+
+            body.sidebar-collapsed
+            .sidebar-top {
+                flex-direction: row;
+
+                gap: 11px;
+
+                padding-bottom: 18px;
+            }
+
+
+            body.sidebar-collapsed
+            .navigation-label {
+                opacity: 1;
+
+                height: auto;
+
+                margin:
+                    7px
+                    12px
+                    10px;
+            }
+
+
+            body.sidebar-collapsed
+            .sidebar-link {
+                justify-content:
+                    flex-start;
+
+                padding:
+                    0
+                    14px;
+            }
+
+
+            body.sidebar-collapsed
+            .sidebar-link-text {
+                position: static;
+
+                opacity: 1;
+
+                pointer-events: auto;
+            }
+
+
+            body.sidebar-collapsed
+            .projects-chevron {
+                display: block;
+            }
+
+
+            body.sidebar-collapsed
+            .project-submenu {
+                display: grid;
+            }
+
+
+            body.sidebar-collapsed
+            .availability-card {
+                justify-content:
+                    flex-start;
+
+                padding:
+                    11px
+                    12px;
+            }
+
+
+            body.sidebar-collapsed
+            .availability-text {
+                display: block;
+            }
+
+
+            body.sidebar-collapsed
+            .sidebar-socials {
+                grid-template-columns:
+                    repeat(4, 1fr);
+            }
+
+
+            body.sidebar-collapsed
+            .sidebar-link::after {
+                display: none;
+            }
+
+        }
+
+
+        @media (
+            max-width: 400px
+        ) {
+
+            .portfolio-sidebar {
+                width:
+                    270px !important;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACKGROUND
+    ====================================================== -->
+
+    <canvas id="bg-canvas"></canvas>
+
+
+    <!-- =====================================================
+         MOBILE MENU BUTTON
+    ====================================================== -->
+
+    <button
+        type="button"
+        class="mobile-sidebar-button"
+        id="mobile-sidebar-button"
+        aria-label="Open navigation"
+    >
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+
+    <!-- MOBILE OVERLAY -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebar-overlay"
+    ></div>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="portfolio-sidebar"
+        id="portfolio-sidebar"
+    >
+
+
+        <div class="sidebar-content">
+
+
+            <!-- =============================================
+                 TOP / BRAND
+            ============================================== -->
+
+            <div class="sidebar-top">
+
+
+                <a
+                    href="/"
+                    class="brand-logo"
+                    aria-label="Ihtisham Mujahid Home"
+                >
+                    IM
+                </a>
+
+
+                <div class="brand-text">
+
+                    <h2>
+                        Ihtisham
+                    </h2>
+
+                    <p>
+                        AI Automation Engineer
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="sidebar-collapse-btn"
+                    id="sidebar-collapse-btn"
+                    aria-label="Collapse sidebar"
+                >
+
+                    <i
+                        class="
+                            fa-solid
+                            fa-chevron-left
+                        "
+                    ></i>
+
+                </button>
+
+
+            </div>
+
+
+            <!-- =============================================
+                 NAVIGATION
+            ============================================== -->
+
+            <div class="sidebar-navigation">
+
+
+                <div class="navigation-label">
+                    Navigation
+                </div>
+
+
+                <!-- HOME -->
+
+                <a
+                    href="/"
+                    class="
+                        sidebar-link
+                        main-navigation-link
+                    "
+                    data-label="Home"
+                >
+
+                    <i
+                        class="
+                            fa-solid
+                            fa-house
+                            sidebar-link-icon
+                        "
+                    ></i>
+
+                    <span class="sidebar-link-text">
+                        Home
+                    </span>
+
+                </a>
+
+
+                <!-- =========================================
+                     PROJECTS
+                ========================================== -->
+
+                <div class="projects-navigation">
+
+
+                    <button
+                        type="button"
+                        class="
+                            sidebar-link
+                            projects-toggle
+                        "
+                        id="projects-toggle"
+                        data-label="Projects"
+                        aria-expanded="false"
+                    >
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-folder-open
+                                sidebar-link-icon
+                            "
+                        ></i>
+
+
+                        <span class="sidebar-link-text">
+                            Projects
+                        </span>
+
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-chevron-down
+                                projects-chevron
+                            "
+                        ></i>
+
+
+                    </button>
+
+
+                    <!-- PROJECT SUB MENU -->
+
+                    <div
+                        class="project-submenu"
+                        id="project-submenu"
+                    >
+
+
+                        <div class="project-submenu-inner">
+
+
+                            <a
+                                href="/projects#current-projects"
+                                class="project-sub-link"
+                            >
+
+                                <span class="project-dot"></span>
+
+                                <span>
+                                    Current Projects
+                                </span>
+
+                            </a>
+
+
+                            <a
+                                href="/projects#previous-projects"
+                                class="project-sub-link"
+                            >
+
+                                <span
+                                    class="
+                                        project-dot
+                                        previous
+                                    "
+                                ></span>
+
+                                <span>
+                                    Previous Projects
+                                </span>
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- CONTACT -->
+
+                <a
+                    href="/contact"
+                    class="
+                        sidebar-link
+                        main-navigation-link
+                    "
+                    data-label="Contact"
+                >
+
+                    <i
+                        class="
+                            fa-solid
+                            fa-envelope
+                            sidebar-link-icon
+                        "
+                    ></i>
+
+                    <span class="sidebar-link-text">
+                        Contact
+                    </span>
+
+                </a>
+
+
+                <!-- ABOUT -->
+
+                <a
+                    href="/about"
+                    class="
+                        sidebar-link
+                        main-navigation-link
+                    "
+                    data-label="About"
+                >
+
+                    <i
+                        class="
+                            fa-solid
+                            fa-circle-info
+                            sidebar-link-icon
+                        "
+                    ></i>
+
+                    <span class="sidebar-link-text">
+                        About
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+            <!-- =============================================
+                 SIDEBAR BOTTOM
+            ============================================== -->
+
+            <div class="sidebar-bottom">
+
+
+                <!-- AVAILABILITY -->
+
+                <div class="availability-card">
+
+
+                    <span class="availability-dot"></span>
+
+
+                    <div class="availability-text">
+
+                        <strong>
+                            Available for projects
+                        </strong>
+
+                        <span>
+                            Automation · AI · Integrations
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================================
+                     SOCIAL LINKS
+                ========================================== -->
+
+                <div class="sidebar-socials">
+
+
+                    <!-- WHATSAPP -->
+
+                    <a
+                        href="https://wa.me/923264147871"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="
+                            sidebar-social-link
+                            whatsapp
+                        "
+                        aria-label="WhatsApp"
+                        title="WhatsApp"
+                    >
+
+                        <i class="fab fa-whatsapp"></i>
+
+                    </a>
+
+
+                    <!-- LINKEDIN -->
+
+                    <a
+                        href="https://www.linkedin.com/in/ihtisham-khan191"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="
+                            sidebar-social-link
+                            linkedin
+                        "
+                        aria-label="LinkedIn"
+                        title="LinkedIn"
+                    >
+
+                        <i class="fab fa-linkedin-in"></i>
+
+                    </a>
+
+
+                    <!-- GITHUB -->
+
+                    <a
+                        href="https://github.com/ihtisham6972"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="
+                            sidebar-social-link
+                            github
+                        "
+                        aria-label="GitHub"
+                        title="GitHub"
+                    >
+
+                        <i class="fab fa-github"></i>
+
+                    </a>
+
+
+                    <!-- INSTAGRAM -->
+
+                    <a
+                        href="https://www.instagram.com/ihtisham_khan_1.0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="
+                            sidebar-social-link
+                            instagram
+                        "
+                        aria-label="Instagram"
+                        title="Instagram"
+                    >
+
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- =====================================================
+         PAGE CONTENT
+    ====================================================== -->
+
+    <main class="page-container">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+
+    <!-- =====================================================
+         EXISTING JAVASCRIPT
+    ====================================================== -->
+
+    <script src="/static/app.js"></script>
+
+
+    <!-- =====================================================
+         SIDEBAR JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        (function () {
+
+
+            const body =
+                document.body;
+
+
+            const collapseButton =
+                document.getElementById(
+                    "sidebar-collapse-btn"
+                );
+
+
+            const mobileButton =
+                document.getElementById(
+                    "mobile-sidebar-button"
+                );
+
+
+            const overlay =
+                document.getElementById(
+                    "sidebar-overlay"
+                );
+
+
+            const projectsToggle =
+                document.getElementById(
+                    "projects-toggle"
+                );
+
+
+            const projectSubmenu =
+                document.getElementById(
+                    "project-submenu"
+                );
+
+
+            const navigationLinks =
+                document.querySelectorAll(
+                    ".main-navigation-link, .project-sub-link"
+                );
+
+
+            /* =================================================
+               PROJECT MENU FUNCTIONS
+            ================================================== */
+
+            function closeProjects() {
+
+                projectSubmenu.classList.remove(
+                    "open"
+                );
+
+
+                projectsToggle.classList.remove(
+                    "open"
+                );
+
+
+                projectsToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+
+            function openProjects() {
+
+                projectSubmenu.classList.add(
+                    "open"
+                );
+
+
+                projectsToggle.classList.add(
+                    "open"
+                );
+
+
+                projectsToggle.setAttribute(
+                    "aria-expanded",
+                    "true"
+                );
+
+            }
+
+
+            /* PROJECTS CLOSED BY DEFAULT */
+
+            closeProjects();
+
+
+            /* =================================================
+               PROJECT BUTTON
+            ================================================== */
+
+            projectsToggle.addEventListener(
+                "click",
+                function (event) {
+
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    /*
+                    If sidebar is collapsed,
+                    expand it first.
+                    */
+
+                    if (
+                        body.classList.contains(
+                            "sidebar-collapsed"
+                        ) &&
+                        window.innerWidth > 750
+                    ) {
+
+
+                        body.classList.remove(
+                            "sidebar-collapsed"
+                        );
+
+
+                        setTimeout(
+                            function () {
+
+                                openProjects();
+
+                            },
+                            150
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    const isOpen =
+                        projectSubmenu.classList.contains(
+                            "open"
+                        );
+
+
+                    if (isOpen) {
+
+                        closeProjects();
+
+                    }
+
+                    else {
+
+                        openProjects();
+
+                    }
+
+
+                }
+            );
+
+
+            /* =================================================
+               DESKTOP COLLAPSE
+            ================================================== */
+
+            collapseButton.addEventListener(
+                "click",
+                function () {
+
+
+                    closeProjects();
+
+
+                    body.classList.toggle(
+                        "sidebar-collapsed"
+                    );
+
+
+                    const collapsed =
+                        body.classList.contains(
+                            "sidebar-collapsed"
+                        );
+
+
+                    collapseButton.setAttribute(
+                        "aria-label",
+                        collapsed
+                            ? "Expand sidebar"
+                            : "Collapse sidebar"
+                    );
+
+
+                }
+            );
+
+
+            /* =================================================
+               MOBILE OPEN
+            ================================================== */
+
+            mobileButton.addEventListener(
+                "click",
+                function () {
+
+
+                    body.classList.add(
+                        "mobile-sidebar-open"
+                    );
+
+
+                    mobileButton.setAttribute(
+                        "aria-label",
+                        "Close navigation"
+                    );
+
+
+                }
+            );
+
+
+            /* =================================================
+               MOBILE CLOSE
+            ================================================== */
+
+            function closeMobileSidebar() {
+
+
+                body.classList.remove(
+                    "mobile-sidebar-open"
+                );
+
+
+                mobileButton.setAttribute(
+                    "aria-label",
+                    "Open navigation"
+                );
+
+
+                closeProjects();
+
+
+            }
+
+
+            overlay.addEventListener(
+                "click",
+                function () {
+
+                    closeMobileSidebar();
+
+                }
+            );
+
+
+            /* =================================================
+               CLOSE AFTER LINK CLICK ON MOBILE
+            ================================================== */
+
+            navigationLinks.forEach(
+                function (link) {
+
+
+                    link.addEventListener(
+                        "click",
+                        function () {
+
+
+                            if (
+                                window.innerWidth <= 750
+                            ) {
+
+                                closeMobileSidebar();
+
+                            }
+
+
+                        }
+                    );
+
+
+                }
+            );
+
+
+            /* =================================================
+               ESCAPE KEY
+            ================================================== */
+
+            document.addEventListener(
+                "keydown",
+                function (event) {
+
+
+                    if (
+                        event.key === "Escape"
+                    ) {
+
+
+                        closeProjects();
+
+
+                        if (
+                            window.innerWidth <= 750
+                        ) {
+
+                            closeMobileSidebar();
+
+                        }
+
+
+                    }
+
+
+                }
+            );
+
+
+            /* =================================================
+               ACTIVE PAGE
+            ================================================== */
+
+            const currentPath =
+                window.location.pathname;
+
+
+            const mainLinks =
+                document.querySelectorAll(
+                    ".main-navigation-link"
+                );
+
+
+            mainLinks.forEach(
+                function (link) {
+
+
+                    const linkURL =
+                        new URL(
+                            link.href,
+                            window.location.origin
+                        );
+
+
+                    const linkPath =
+                        linkURL.pathname;
+
+
+                    if (
+                        linkPath === "/" &&
+                        currentPath === "/"
+                    ) {
+
+                        link.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                    else if (
+                        linkPath !== "/" &&
+                        currentPath === linkPath
+                    ) {
+
+                        link.classList.add(
+                            "active"
+                        );
+
+                    }
+
+
+                }
+            );
+
+
+            /* PROJECT PAGE ACTIVE */
+
+            if (
+                currentPath === "/projects"
+            ) {
+
+                projectsToggle.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            /* =================================================
+               WINDOW RESIZE
+            ================================================== */
+
+            window.addEventListener(
+                "resize",
+                function () {
+
+
+                    if (
+                        window.innerWidth > 750
+                    ) {
+
+                        body.classList.remove(
+                            "mobile-sidebar-open"
+                        );
+
+                    }
+
+
+                }
+            );
+
+
+        })();
+
+    </script>
+
+
+</body>
+
+</html>
