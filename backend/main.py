@@ -1,14 +1,13 @@
+import os
+import openpyxl
+import resend
+
+from datetime import datetime
+
 from fastapi import FastAPI, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-
-import openpyxl
-import os
-import smtplib
-
-from datetime import datetime
-from email.message import EmailMessage
 
 
 # =========================================================
@@ -44,12 +43,17 @@ templates = Jinja2Templates(
 
 EXCEL_FILE = "visitors.xlsx"
 
-# Your email address
+# Email where YOU receive contact-form submissions
 RECEIVER_EMAIL = "ihtisham191181@gmail.com"
 
-# Gmail credentials from environment variables
-SENDER_EMAIL = os.getenv("MAIL_USERNAME")
-SENDER_PASSWORD = os.getenv("MAIL_PASSWORD")
+# Resend configuration
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+
+# For testing with Resend
+SENDER_EMAIL = os.getenv(
+    "RESEND_FROM_EMAIL",
+    "onboarding@resend.dev"
+)
 
 
 # =========================================================
@@ -118,22 +122,18 @@ def save_to_excel(
 
 
 # =========================================================
-# CHECK EMAIL CONFIGURATION
+# CHECK RESEND CONFIGURATION
 # =========================================================
 
 def check_email_configuration():
 
-    if not SENDER_EMAIL:
+    if not RESEND_API_KEY:
 
         raise ValueError(
-            "MAIL_USERNAME environment variable is missing."
+            "RESEND_API_KEY environment variable is missing."
         )
 
-    if not SENDER_PASSWORD:
-
-        raise ValueError(
-            "MAIL_PASSWORD environment variable is missing."
-        )
+    resend.api_key = RESEND_API_KEY
 
 
 # =========================================================
@@ -149,29 +149,6 @@ def send_contact_email(
 ):
 
     check_email_configuration()
-
-
-    # -----------------------------------------------------
-    # CREATE EMAIL
-    # -----------------------------------------------------
-
-    email_message = EmailMessage()
-
-    email_message["Subject"] = (
-        f"New Portfolio Contact - {name}"
-    )
-
-    email_message["From"] = SENDER_EMAIL
-
-    email_message["To"] = RECEIVER_EMAIL
-
-    # When you click Reply, Gmail will reply to visitor
-    email_message["Reply-To"] = email
-
-
-    # -----------------------------------------------------
-    # EMAIL CONTENT
-    # -----------------------------------------------------
 
     email_body = f"""
 NEW PORTFOLIO CONTACT SUBMISSION
@@ -206,34 +183,21 @@ PROJECT / MESSAGE
 This message was submitted through
 Ihtisham Mujahid's portfolio website.
 
-You can reply directly to this email to
-contact {name}.
+Visitor Email:
+{email}
 """
 
+    params = {
+        "from": SENDER_EMAIL,
+        "to": [RECEIVER_EMAIL],
+        "reply_to": email,
+        "subject": f"New Portfolio Contact - {name}",
+        "text": email_body
+    }
 
-    email_message.set_content(
-        email_body
-    )
+    response = resend.Emails.send(params)
 
-
-    # -----------------------------------------------------
-    # CONNECT TO GMAIL
-    # -----------------------------------------------------
-
-    with smtplib.SMTP_SSL(
-        "smtp.gmail.com",
-        465,
-        timeout=20
-    ) as smtp:
-
-        smtp.login(
-            SENDER_EMAIL,
-            SENDER_PASSWORD
-        )
-
-        smtp.send_message(
-            email_message
-        )
+    return response
 
 
 # =========================================================
@@ -246,28 +210,6 @@ def send_confirmation_email(
 ):
 
     check_email_configuration()
-
-
-    # -----------------------------------------------------
-    # CREATE CONFIRMATION EMAIL
-    # -----------------------------------------------------
-
-    confirmation_email = EmailMessage()
-
-    confirmation_email["Subject"] = (
-        "Thanks for contacting Ihtisham Mujahid"
-    )
-
-    confirmation_email["From"] = SENDER_EMAIL
-
-    confirmation_email["To"] = visitor_email
-
-    confirmation_email["Reply-To"] = RECEIVER_EMAIL
-
-
-    # -----------------------------------------------------
-    # EMAIL CONTENT
-    # -----------------------------------------------------
 
     confirmation_body = f"""
 Hi {name},
@@ -284,30 +226,17 @@ Ihtisham Mujahid
 AI Automation Engineer
 """
 
+    params = {
+        "from": SENDER_EMAIL,
+        "to": [visitor_email],
+        "reply_to": RECEIVER_EMAIL,
+        "subject": "Thanks for contacting Ihtisham Mujahid",
+        "text": confirmation_body
+    }
 
-    confirmation_email.set_content(
-        confirmation_body
-    )
+    response = resend.Emails.send(params)
 
-
-    # -----------------------------------------------------
-    # CONNECT TO GMAIL
-    # -----------------------------------------------------
-
-    with smtplib.SMTP_SSL(
-        "smtp.gmail.com",
-        465,
-        timeout=20
-    ) as smtp:
-
-        smtp.login(
-            SENDER_EMAIL,
-            SENDER_PASSWORD
-        )
-
-        smtp.send_message(
-            confirmation_email
-        )
+    return response
 
 
 # =========================================================
@@ -404,17 +333,13 @@ async def save_contact(
 
 ):
 
-
     # -----------------------------------------------------
     # CLEAN INPUT
     # -----------------------------------------------------
 
     name = name.strip()
-
     email = email.strip()
-
     whatsapp = whatsapp.strip()
-
     message = message.strip()
 
 
@@ -549,7 +474,7 @@ async def save_contact(
 
     try:
 
-        send_contact_email(
+        admin_response = send_contact_email(
             name=name,
             email=email,
             whatsapp=whatsapp,
@@ -561,6 +486,11 @@ async def save_contact(
 
         print(
             f"Admin notification sent successfully for: {name}"
+        )
+
+        print(
+            "Resend admin response:",
+            admin_response
         )
 
 
@@ -580,7 +510,7 @@ async def save_contact(
 
     try:
 
-        send_confirmation_email(
+        confirmation_response = send_confirmation_email(
             name=name,
             visitor_email=email
         )
@@ -589,6 +519,11 @@ async def save_contact(
 
         print(
             f"Confirmation email sent successfully to: {email}"
+        )
+
+        print(
+            "Resend confirmation response:",
+            confirmation_response
         )
 
 
@@ -607,7 +542,10 @@ async def save_contact(
     print("--------------------------------------")
     print(f"Contact: {name}")
     print(f"Admin email: {admin_email_sent}")
-    print(f"Visitor confirmation: {confirmation_email_sent}")
+    print(
+        f"Visitor confirmation: "
+        f"{confirmation_email_sent}"
+    )
     print("--------------------------------------")
 
 
