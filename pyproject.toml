@@ -1,2 +1,20 @@
+[project]
+name = "my-portfolio-website"
+version = "1.0.0"
+description = "Ihtisham Mujahid Portfolio Website"
+requires-python = ">=3.11"
+
+dependencies = [
+    "fastapi[standard]",
+    "jinja2",
+    "python-multipart",
+    "openpyxl",
+    "resend"
+]
+
 [tool.fastapi]
 entrypoint = "backend.main:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
